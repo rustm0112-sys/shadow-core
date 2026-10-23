@@ -2,7 +2,7 @@
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SHADOW CORE 프로필 생성기</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+KR:wght@400;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root{color-scheme:dark;--bg:#0b0b12;--panel:#171724;--line:#2c2c44;--tx:#e8e8f4;--sub:#9a9ab8;--ac:#8b5cf6;--ac2:#22d3ee}
@@ -11,18 +11,21 @@ body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Ap
 .wrap{max-width:720px;margin:0 auto}
 h1{font-size:20px;margin:8px 0 16px}
 
-#card{width:100%;background:linear-gradient(160deg,#14102a,#0a0a14 60%,#0d1a24);border:2px solid var(--ac);border-radius:16px;padding:14px;display:grid;grid-template-columns:46% 1fr;gap:14px;overflow:hidden}
-.img{background:#1d1d30 center/cover no-repeat;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:12px}
-.main{aspect-ratio:3/5;width:100%}
-.info{display:flex;flex-direction:column;min-width:0;container-type:inline-size}
-.title{font-family:Orbitron,Impact,sans-serif;font-weight:900;font-size:11.5cqw;letter-spacing:.06em;line-height:1.1;color:#fff;text-shadow:0 0 12px var(--ac);white-space:nowrap;padding-bottom:8px;border-bottom:2px solid var(--ac);margin-bottom:12px}
+/* 카드: 600x400 (가로 3 : 세로 2) 고정 크기로 만들고, 화면에서는 폭에 맞춰 확대·축소만 함 → PC·모바일 같은 모양 */
+.cardbox{width:100%;overflow:hidden}
+.shot{position:fixed;left:-10000px;top:0;width:600px;height:400px}
+#card,.shot>div{width:600px;height:400px;transform-origin:0 0;font-family:"Noto Sans KR",sans-serif;background:linear-gradient(160deg,#14102a,#0a0a14 60%,#0d1a24);border:2px solid var(--ac);border-radius:16px;padding:14px;display:flex;gap:16px;overflow:hidden}
+.img{background:#1d1d30 center/cover no-repeat;border:1px solid var(--line);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:12px}
+.main{height:100%;width:221px;flex:none}
+.info{flex:1;display:flex;flex-direction:column;min-width:0}
+.title{font-family:Orbitron,Impact,sans-serif;font-weight:900;font-size:34px;letter-spacing:.06em;line-height:1.15;color:#fff;text-shadow:0 0 10px var(--ac);white-space:nowrap;padding:4px 0 8px;border-bottom:2px solid var(--ac);margin-bottom:13px}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.nick{font-size:clamp(20px,11cqw,30px);font-weight:800;word-break:break-all}
-.lv{background:var(--ac);color:#fff;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px}
-.job{color:var(--ac2);font-size:clamp(13px,6.5cqw,16px);margin-top:4px}
-.lab{font-size:11px;letter-spacing:2px;color:var(--ac);font-weight:700;margin:16px 0 6px}
-.intro{background:#00000055;border-left:3px solid var(--ac2);padding:8px 10px;font-size:13px;border-radius:4px;min-height:32px;word-break:break-all}
-.ng{margin-top:auto;border:1px solid #ef4444;color:#fca5a5;border-radius:6px;padding:8px 10px;font-size:13px;min-height:32px;word-break:break-all}
+.nick{font-size:28px;font-weight:800;word-break:break-all;line-height:1.2}
+.lv{background:var(--ac);color:#fff;font-size:14px;font-weight:700;padding:2px 9px;border-radius:24px}
+.job{color:var(--ac2);font-size:16px;margin-top:5px}
+.lab{font-size:12px;letter-spacing:2px;color:var(--ac);font-weight:700;margin:18px 0 7px}
+.intro{background:#00000055;border-left:3px solid var(--ac2);padding:8px 11px;font-size:15px;border-radius:4px;word-break:break-all}
+.ng{margin-top:auto;border:1px solid #ef4444;color:#fca5a5;border-radius:6px;padding:8px 11px;font-size:15px;word-break:break-all}
 .ng b{color:#ef4444;margin-right:6px}
 
 .form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:20px}
@@ -36,16 +39,18 @@ button:hover{filter:brightness(1.1)}
 </style></head><body><div class="wrap">
 <h1>🌑 SHADOW CORE 프로필 생성기</h1>
 
+<div class="cardbox" id="cardbox">
 <div id="card">
   <div class="img main" id="mainImg">메인 이미지</div>
   <div class="info">
-    <div class="title">SHADOW CORE</div>
+    <div class="title" id="title">SHADOW CORE</div>
     <div class="row"><span class="nick" id="oNick">닉네임</span><span class="lv" id="oLv">Lv.1</span></div>
     <div class="job" id="oJob">직업</div>
     <div class="lab">ONE LINE</div>
     <div class="intro" id="oIntro">한줄 소개</div>
     <div class="ng"><b>NG</b><span id="oNg">-</span></div>
   </div>
+</div>
 </div>
 
 <div class="form">
@@ -64,19 +69,76 @@ button:hover{filter:brightness(1.1)}
 
 <script>
 const $=id=>document.getElementById(id);
-const setImg=(el,file)=>{if(!file)return;const r=new FileReader();r.onload=()=>{el.style.backgroundImage='url('+r.result+')';el.textContent=''};r.readAsDataURL(file)};
+const SCALE=2; // 저장 이미지: 600x400 카드를 2배 = 항상 1200x800 (PC·모바일 동일)
+
+// 제목이 칸을 넘지 않도록 글자 크기 자동 맞춤
+function fitTitle(t=$('title')){
+  t.style.fontSize='';
+  let fs=parseFloat(getComputedStyle(t).fontSize);
+  while(t.scrollWidth>t.clientWidth+0.5&&fs>6){fs-=0.5;t.style.fontSize=fs+'px'}
+}
+
+// 업로드 이미지를 칸 크기에 맞게 미리 잘라서(고화질 축소) 넣기 — 저장 시 깨짐 방지
+let srcImg=null;
+function drawMain(mult,el=$('mainImg')){
+  if(!srcImg)return;
+  const r=el.getBoundingClientRect();
+  const W=Math.round(r.width*mult),H=Math.round(r.height*mult);
+  if(!W||!H)return;
+  const iw=srcImg.naturalWidth,ih=srcImg.naturalHeight,s=Math.max(W/iw,H/ih);
+  const cw=W/s,ch=H/s,cx=(iw-cw)/2,cy=(ih-ch)/2;
+  // 큰 이미지는 절반씩 단계적으로 줄여 계단 현상 방지
+  let cur=document.createElement('canvas');cur.width=Math.round(cw);cur.height=Math.round(ch);
+  let ctx=cur.getContext('2d');ctx.drawImage(srcImg,cx,cy,cw,ch,0,0,cur.width,cur.height);
+  while(cur.width/2>W&&cur.height/2>H){
+    const n=document.createElement('canvas');n.width=Math.round(cur.width/2);n.height=Math.round(cur.height/2);
+    const c2=n.getContext('2d');c2.imageSmoothingEnabled=true;c2.imageSmoothingQuality='high';
+    c2.drawImage(cur,0,0,n.width,n.height);cur=n;
+  }
+  const out=document.createElement('canvas');out.width=W;out.height=H;
+  const oc=out.getContext('2d');oc.imageSmoothingEnabled=true;oc.imageSmoothingQuality='high';
+  oc.drawImage(cur,0,0,W,H);
+  el.style.backgroundImage='url('+out.toDataURL('image/png')+')';
+  el.style.backgroundSize='100% 100%';
+  el.textContent='';
+}
+
+$('fMain').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{const im=new Image();im.onload=()=>{srcImg=im;drawMain(2)};im.src=r.result};
+  r.readAsDataURL(f);
+};
+
 const bind=(i,o,fmt)=>{$(i).addEventListener('input',()=>{$(o).textContent=fmt?fmt($(i).value):$(i).value})};
 bind('iNick','oNick',v=>v||'닉네임');
 bind('iLv','oLv',v=>'Lv.'+(v||1));
 bind('iJob','oJob',v=>v||'직업');
 bind('iIntro','oIntro',v=>v||'한줄 소개');
 bind('iNg','oNg',v=>v||'-');
-$('fMain').onchange=e=>setImg($('mainImg'),e.target.files[0]);
+
+function scaleCard(){
+  const box=$('cardbox'),k=box.clientWidth/600;
+  $('card').style.transform='scale('+k+')';box.style.height=(400*k)+'px';
+}
+scaleCard();
+let rt;window.addEventListener('resize',()=>scaleCard());window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{fitTitle();drawMain(2)},150)});
+fitTitle();
+if(document.fonts){document.fonts.ready.then(fitTitle);document.fonts.load('900 20px Orbitron').then(fitTitle).catch(()=>{})}
+
 $('make').onclick=async()=>{
   const b=$('make');b.textContent='만드는 중...';
   try{
-    await (document.fonts&&document.fonts.ready);
-    const c=await html2canvas($('card'),{scale:2,backgroundColor:'#0a0a14',useCORS:true});
+    if(document.fonts)await document.fonts.ready;
+    // 화면 크기와 상관없이 폭 600px 고정 복제본으로 저장 → 어느 기기든 같은 이미지
+    const box=document.createElement('div');box.className='cardbox shot';
+    const clone=$('card').cloneNode(true);clone.removeAttribute('id');clone.style.transform='none';
+    clone.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
+    box.appendChild(clone);document.body.appendChild(box);
+    fitTitle(clone.querySelector('.title'));drawMain(SCALE,clone.querySelector('.main'));
+    let c;
+    try{c=await html2canvas(clone,{scale:SCALE,backgroundColor:null,useCORS:true});}
+    finally{box.remove();}
     const a=document.createElement('a');
     a.href=c.toDataURL('image/png');
     a.download='shadow-core-'+(($('iNick').value||'profile').trim().replace(/[\\/:*?"<>|\s]+/g,'_'))+'.png';
