@@ -10,9 +10,9 @@
 body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;padding:16px}
 .wrap{max-width:980px;margin:0 auto}
 h1{font-size:20px;margin:8px 0 18px}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:28px;align-items:start}
-.layout .form{order:1;margin-top:0}
-.layout .preview{order:2}
+.layout{display:grid;grid-template-columns:420px minmax(0,1fr);gap:28px;align-items:start}
+.layout .preview{order:1}
+.layout .form{order:2;margin-top:0}
 @media (max-width:860px){.layout{grid-template-columns:1fr}.layout .preview{order:1;position:static;max-width:460px;margin:0 auto;width:100%}.layout .form{order:2}}
 #card{width:100%;background:linear-gradient(160deg,#14102a,#0a0a14 60%,#0d1a24);border:2px solid var(--ac);border-radius:16px;padding:16px;position:relative;overflow:hidden}
 .title{font-family:Orbitron,Impact,sans-serif;font-weight:900;font-size:26px;letter-spacing:3px;text-align:center;color:#fff;text-shadow:0 0 12px var(--ac)}
