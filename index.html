@@ -8,12 +8,16 @@
 :root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#0b0b12;--panel:#171724;--line:#2c2c44;--tx:#e8e8f4;--sub:#9a9ab8;--ac:#8b5cf6;--ac2:#22d3ee}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;padding:16px}
-.wrap{max-width:460px;margin:0 auto}
-h1{font-size:18px;margin:4px 0 14px}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-size:20px;margin:8px 0 18px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:28px;align-items:start}
+.layout .form{order:1;margin-top:0}
+.layout .preview{order:2}
+@media (max-width:860px){.layout{grid-template-columns:1fr}.layout .preview{order:1;position:static;max-width:460px;margin:0 auto;width:100%}.layout .form{order:2}}
 #card{width:100%;background:linear-gradient(160deg,#14102a,#0a0a14 60%,#0d1a24);border:2px solid var(--ac);border-radius:16px;padding:16px;position:relative;overflow:hidden}
 .title{font-family:Orbitron,Impact,sans-serif;font-weight:900;font-size:26px;letter-spacing:3px;text-align:center;color:#fff;text-shadow:0 0 12px var(--ac)}
 .img{background:#1d1d30 center/cover no-repeat;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:12px}
-.main{height:260px;margin:12px 0}
+.main{aspect-ratio:3/5;width:100%;margin:12px 0}
 .row{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
 .nick{font-size:24px;font-weight:800}
 .lv{background:var(--ac);color:#fff;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px}
@@ -37,13 +41,12 @@ textarea{resize:vertical;min-height:54px}
 .up{display:block;background:#0e0e18;border:1px dashed var(--ac);color:var(--ac);text-align:center;padding:9px;border-radius:8px;font-size:13px;margin-bottom:6px;cursor:pointer}
 .up input{display:none}
 button{width:100%;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:700;margin-top:14px}
-#modal{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;flex-direction:column;padding:16px;z-index:9;overflow:auto}
-#modal img{max-width:100%;max-height:78vh;border-radius:10px}
-#modal p{color:#fff;font-size:14px;text-align:center}
-#modal button{max-width:200px;background:#333}
+button:hover{filter:brightness(1.1)}button{cursor:pointer}
 </style></head><body><div class="wrap">
 <h1>🌑 SHADOW CORE 프로필 생성기</h1>
 
+<div class="layout">
+<div class="preview">
 <div id="card">
   <div class="title">SHADOW CORE</div>
   <div class="img main" id="mainImg">메인 이미지</div>
@@ -57,6 +60,8 @@ button{width:100%;background:var(--ac);color:#fff;border:0;border-radius:12px;pa
   <div class="intro" id="oIntro">한줄 소개</div>
   <div class="lab">&nbsp;</div>
   <div class="ng"><b>NG</b><span id="oNg">-</span></div>
+</div>
+<button id="make">⬇ 이미지 다운로드</button>
 </div>
 
 <div class="form">
@@ -75,10 +80,8 @@ button{width:100%;background:var(--ac);color:#fff;border:0;border-radius:12px;pa
   <input type="text" id="iIntro" placeholder="한줄 소개" maxlength="60">
   <h2>NG</h2>
   <input type="text" id="iNg" placeholder="NG 항목 (예: 파국, 사이퍼 등)" maxlength="80">
-  <button id="make">🖼 이미지로 만들기</button>
+</div>
 </div></div>
-
-<div id="modal"><p>이미지를 길게 눌러 저장하세요</p><img id="out" alt="프로필"><button id="close">닫기</button></div>
 
 <script>
 const $=id=>document.getElementById(id);
@@ -104,9 +107,11 @@ $('make').onclick=async()=>{
   try{
     await (document.fonts&&document.fonts.ready);
     const c=await html2canvas($('card'),{scale:2,backgroundColor:'#0a0a14',useCORS:true});
-    $('out').src=c.toDataURL('image/png');$('modal').style.display='flex';
+    const a=document.createElement('a');
+    a.href=c.toDataURL('image/png');
+    a.download='shadow-core-'+(($('iNick').value||'profile').trim().replace(/[\\/:*?"<>|\s]+/g,'_'))+'.png';
+    document.body.appendChild(a);a.click();a.remove();
   }catch(err){alert('이미지 생성에 실패했어요. 화면 캡처를 이용해 주세요.')}
-  b.textContent='🖼 이미지로 만들기';
+  b.textContent='⬇ 이미지 다운로드';
 };
-$('close').onclick=()=>{$('modal').style.display='none'};
 </script></body></html>
