@@ -5,52 +5,47 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#0b0b12;--panel:#171724;--line:#2c2c44;--tx:#e8e8f4;--sub:#9a9ab8;--ac:#8b5cf6;--ac2:#22d3ee}
+:root{color-scheme:dark;--bg:#0b0b12;--panel:#171724;--line:#2c2c44;--tx:#e8e8f4;--sub:#9a9ab8;--ac:#8b5cf6;--ac2:#22d3ee}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;padding:16px}
-.wrap{max-width:980px;margin:0 auto}
-h1{font-size:20px;margin:8px 0 18px}
-.layout{display:grid;grid-template-columns:420px minmax(0,1fr);gap:28px;align-items:start}
-.layout .preview{order:1}
-.layout .form{order:2;margin-top:0}
-@media (max-width:860px){.layout{grid-template-columns:1fr}.layout .preview{order:1;position:static;max-width:460px;margin:0 auto;width:100%}.layout .form{order:2}}
-#card{width:100%;background:linear-gradient(160deg,#14102a,#0a0a14 60%,#0d1a24);border:2px solid var(--ac);border-radius:16px;padding:16px;position:relative;overflow:hidden}
-.title{font-family:Orbitron,Impact,sans-serif;font-weight:900;font-size:26px;letter-spacing:3px;text-align:center;color:#fff;text-shadow:0 0 12px var(--ac)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:720px;margin:0 auto}
+h1{font-size:20px;margin:8px 0 16px}
+
+#card{width:100%;background:linear-gradient(160deg,#14102a,#0a0a14 60%,#0d1a24);border:2px solid var(--ac);border-radius:16px;padding:14px;display:grid;grid-template-columns:46% 1fr;gap:14px;overflow:hidden}
 .img{background:#1d1d30 center/cover no-repeat;border:1px solid var(--line);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:12px}
-.main{aspect-ratio:3/5;width:100%;margin:12px 0}
-.row{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
-.nick{font-size:24px;font-weight:800}
+.main{aspect-ratio:3/5;width:100%}
+.info{display:flex;flex-direction:column;min-width:0;container-type:inline-size}
+.title{font-family:Orbitron,Impact,sans-serif;font-weight:900;font-size:11.5cqw;letter-spacing:.06em;line-height:1.1;color:#fff;text-shadow:0 0 12px var(--ac);white-space:nowrap;padding-bottom:8px;border-bottom:2px solid var(--ac);margin-bottom:12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.nick{font-size:clamp(20px,11cqw,30px);font-weight:800;word-break:break-all}
 .lv{background:var(--ac);color:#fff;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px}
-.job{color:var(--ac2);font-size:14px;margin-top:2px}
-.lab{font-size:11px;letter-spacing:2px;color:var(--ac);font-weight:700;margin:14px 0 6px}
-.intro{background:#00000055;border-left:3px solid var(--ac2);padding:8px 10px;font-size:13px;border-radius:4px;min-height:32px}
-.ng{border:1px solid #ef4444;color:#fca5a5;border-radius:6px;padding:8px 10px;font-size:13px;min-height:32px}
+.job{color:var(--ac2);font-size:clamp(13px,6.5cqw,16px);margin-top:4px}
+.lab{font-size:11px;letter-spacing:2px;color:var(--ac);font-weight:700;margin:16px 0 6px}
+.intro{background:#00000055;border-left:3px solid var(--ac2);padding:8px 10px;font-size:13px;border-radius:4px;min-height:32px;word-break:break-all}
+.ng{margin-top:auto;border:1px solid #ef4444;color:#fca5a5;border-radius:6px;padding:8px 10px;font-size:13px;min-height:32px;word-break:break-all}
 .ng b{color:#ef4444;margin-right:6px}
-.form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:16px}
-.form h2{font-size:13px;margin:12px 0 6px;color:var(--sub)}.form h2:first-child{margin-top:0}
-input[type=text],input[type=number],textarea{width:100%;background:#0e0e18;border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:10px;font-size:15px;font-family:inherit;margin-bottom:6px}
-textarea{resize:vertical;min-height:54px}
+
+.form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:20px}
+.form h2{font-size:14px;margin:16px 0 8px;color:var(--sub)}.form h2:first-child{margin-top:0}
+input[type=text],input[type=number]{width:100%;background:#0e0e18;border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:11px;font-size:15px;font-family:inherit;margin-bottom:8px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.up{display:block;background:#0e0e18;border:1px dashed var(--ac);color:var(--ac);text-align:center;padding:9px;border-radius:8px;font-size:13px;margin-bottom:6px;cursor:pointer}
+.up{display:block;background:#0e0e18;border:1px dashed var(--ac);color:var(--ac);text-align:center;padding:12px;border-radius:8px;font-size:14px;margin-bottom:8px;cursor:pointer}
 .up input{display:none}
-button{width:100%;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:700;margin-top:14px}
-button:hover{filter:brightness(1.1)}button{cursor:pointer}
+button{width:100%;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:15px;font-size:17px;font-weight:700;margin-top:16px;cursor:pointer}
+button:hover{filter:brightness(1.1)}
 </style></head><body><div class="wrap">
 <h1>🌑 SHADOW CORE 프로필 생성기</h1>
 
-<div class="layout">
-<div class="preview">
 <div id="card">
-  <div class="title">SHADOW CORE</div>
   <div class="img main" id="mainImg">메인 이미지</div>
-  <div class="row"><span class="nick" id="oNick">닉네임</span><span class="lv" id="oLv">Lv.1</span></div>
-  <div class="job" id="oJob">직업</div>
-  <div class="lab">ONE LINE</div>
-  <div class="intro" id="oIntro">한줄 소개</div>
-  <div class="lab">&nbsp;</div>
-  <div class="ng"><b>NG</b><span id="oNg">-</span></div>
-</div>
-<button id="make">⬇ 이미지 다운로드</button>
+  <div class="info">
+    <div class="title">SHADOW CORE</div>
+    <div class="row"><span class="nick" id="oNick">닉네임</span><span class="lv" id="oLv">Lv.1</span></div>
+    <div class="job" id="oJob">직업</div>
+    <div class="lab">ONE LINE</div>
+    <div class="intro" id="oIntro">한줄 소개</div>
+    <div class="ng"><b>NG</b><span id="oNg">-</span></div>
+  </div>
 </div>
 
 <div class="form">
@@ -62,9 +57,10 @@ button:hover{filter:brightness(1.1)}button{cursor:pointer}
   <h2>한줄 소개</h2>
   <input type="text" id="iIntro" placeholder="한줄 소개" maxlength="60">
   <h2>NG</h2>
-  <input type="text" id="iNg" placeholder="NG 항목 (예: 파국, 사이퍼 등)" maxlength="80">
+  <input type="text" id="iNg" placeholder="NG 항목" maxlength="80">
+  <button id="make">⬇ 이미지 다운로드</button>
 </div>
-</div></div>
+</div>
 
 <script>
 const $=id=>document.getElementById(id);
