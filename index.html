@@ -23,12 +23,6 @@ h1{font-size:20px;margin:8px 0 18px}
 .lv{background:var(--ac);color:#fff;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px}
 .job{color:var(--ac2);font-size:14px;margin-top:2px}
 .lab{font-size:11px;letter-spacing:2px;color:var(--ac);font-weight:700;margin:14px 0 6px}
-.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.sk .img{aspect-ratio:1}
-.sk div.n{font-size:11px;text-align:center;margin-top:4px;min-height:14px;word-break:keep-all}
-.pet{display:flex;gap:10px;align-items:center}
-.pet .img{width:84px;height:84px;flex:none}
-.pn{font-weight:700;font-size:14px}.pi{font-size:12px;color:var(--sub);white-space:pre-wrap}
 .intro{background:#00000055;border-left:3px solid var(--ac2);padding:8px 10px;font-size:13px;border-radius:4px;min-height:32px}
 .ng{border:1px solid #ef4444;color:#fca5a5;border-radius:6px;padding:8px 10px;font-size:13px;min-height:32px}
 .ng b{color:#ef4444;margin-right:6px}
@@ -37,7 +31,6 @@ h1{font-size:20px;margin:8px 0 18px}
 input[type=text],input[type=number],textarea{width:100%;background:#0e0e18;border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:10px;font-size:15px;font-family:inherit;margin-bottom:6px}
 textarea{resize:vertical;min-height:54px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.g4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .up{display:block;background:#0e0e18;border:1px dashed var(--ac);color:var(--ac);text-align:center;padding:9px;border-radius:8px;font-size:13px;margin-bottom:6px;cursor:pointer}
 .up input{display:none}
 button{width:100%;background:var(--ac);color:#fff;border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:700;margin-top:14px}
@@ -52,10 +45,6 @@ button:hover{filter:brightness(1.1)}button{cursor:pointer}
   <div class="img main" id="mainImg">메인 이미지</div>
   <div class="row"><span class="nick" id="oNick">닉네임</span><span class="lv" id="oLv">Lv.1</span></div>
   <div class="job" id="oJob">직업</div>
-  <div class="lab">SKILL</div>
-  <div class="skills" id="skOut"></div>
-  <div class="lab">PET</div>
-  <div class="pet"><div class="img" id="petImg">PET</div><div><div class="pn" id="oPetN">펫 이름</div><div class="pi" id="oPetI">펫 정보</div></div></div>
   <div class="lab">ONE LINE</div>
   <div class="intro" id="oIntro">한줄 소개</div>
   <div class="lab">&nbsp;</div>
@@ -70,12 +59,6 @@ button:hover{filter:brightness(1.1)}button{cursor:pointer}
   <h2>기본 정보</h2>
   <input type="text" id="iNick" placeholder="닉네임" maxlength="20">
   <div class="g2"><input type="number" id="iLv" placeholder="레벨" min="1"><input type="text" id="iJob" placeholder="직업" maxlength="20"></div>
-  <h2>스킬 (최대 4개)</h2>
-  <div class="g4" id="skForm"></div>
-  <h2>펫 (이미지 1장)</h2>
-  <label class="up">📷 펫 이미지 선택<input type="file" accept="image/*" id="fPet"></label>
-  <input type="text" id="iPetN" placeholder="펫 이름" maxlength="20">
-  <textarea id="iPetI" placeholder="펫 정보 (종류, 성격 등)"></textarea>
   <h2>한줄 소개</h2>
   <input type="text" id="iIntro" placeholder="한줄 소개" maxlength="60">
   <h2>NG</h2>
@@ -90,18 +73,9 @@ const bind=(i,o,fmt)=>{$(i).addEventListener('input',()=>{$(o).textContent=fmt?f
 bind('iNick','oNick',v=>v||'닉네임');
 bind('iLv','oLv',v=>'Lv.'+(v||1));
 bind('iJob','oJob',v=>v||'직업');
-bind('iPetN','oPetN',v=>v||'펫 이름');
-bind('iPetI','oPetI',v=>v||'펫 정보');
 bind('iIntro','oIntro',v=>v||'한줄 소개');
 bind('iNg','oNg',v=>v||'-');
 $('fMain').onchange=e=>setImg($('mainImg'),e.target.files[0]);
-$('fPet').onchange=e=>setImg($('petImg'),e.target.files[0]);
-for(let i=0;i<4;i++){
-  $('skForm').insertAdjacentHTML('beforeend',`<div><label class="up">📷 스킬 ${i+1}<input type="file" accept="image/*" id="fs${i}"></label><input type="text" id="is${i}" placeholder="스킬 ${i+1} 이름" maxlength="12"></div>`);
-  $('skOut').insertAdjacentHTML('beforeend',`<div class="sk"><div class="img" id="os${i}">${i+1}</div><div class="n" id="on${i}"></div></div>`);
-  $('fs'+i).onchange=e=>setImg($('os'+i),e.target.files[0]);
-  $('is'+i).oninput=e=>{$('on'+i).textContent=e.target.value};
-}
 $('make').onclick=async()=>{
   const b=$('make');b.textContent='만드는 중...';
   try{
